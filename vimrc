@@ -50,12 +50,12 @@ let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
     \ }
 
-" tabs
+" gui tabs
 source $HOME/.vim/tabs.vim
 noremap <c-tab> :tabnext<cr>
 noremap <c-s-tab> :tabprev<cr>
-nnoremap <C-w> :tabclose<CR>
-inoremap <C-w> <Esc>:tabclose<CR>
+nnoremap <C-w> :q<CR>
+inoremap <C-w> <Esc>:q<CR>
 
 " others
 source $HOME/.vim/stripWhitespace.vim

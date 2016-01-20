@@ -19,7 +19,25 @@ set smartcase
 set number
 
 " pathogen
-execute pathogen#infect()
+" execute pathogen#infect()
+
+" Setup vundle and Plugins
+let g:vundle_default_git_proto = 'git'
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
+Plugin 'vim-airline/vim-airline'
+Plugin 'xolox/vim-easytags'
+Plugin 'xolox/vim-misc'
+
+" All Plugins must be added before the following line
+call vundle#end()
+
 syntax on
 filetype plugin indent on
 

@@ -18,6 +18,9 @@ set ignorecase
 set smartcase
 set number
 
+syntax on
+filetype plugin indent on
+
 " pathogen
 " execute pathogen#infect()
 
@@ -28,31 +31,21 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+"
+" crtlp
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'ervandew/supertab'
-Plugin 'vim-airline/vim-airline'
-Plugin 'xolox/vim-easytags'
-Plugin 'xolox/vim-misc'
-
-" All Plugins must be added before the following line
-call vundle#end()
-
-syntax on
-filetype plugin indent on
-
-" airline
-set laststatus=2
-let g:airline_powerline_fonts = 1
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
-
-" cmds tab completion
-set wildmode=longest,list,full
-set wildmenu
+let g:ctrlp_map = '<c-t>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'rc'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<c-t>'],
+    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+    \ }
 
 " code tab completion (supertab+jedi)
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabDefaultCompletionTypeDiscovery = [
       \ "&omnifunc:<c-x><c-o>",
@@ -64,15 +57,28 @@ let g:jedi#show_call_signatures = 0
 let g:jedi#popup_on_dot = 1
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
-" crtlp
-let g:ctrlp_map = '<c-t>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'rc'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<c-t>'],
-    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
-    \ }
+" cmds tab completion
+set wildmode=longest,list,full
+set wildmenu
+
+" airline
+Plugin 'vim-airline/vim-airline'
+set laststatus=2
+let g:airline_powerline_fonts = 1
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
+endif
+
+Plugin 'xolox/vim-easytags'
+Plugin 'xolox/vim-misc'
+
+"nerdtree
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+map <C-n> <plug>NERDTreeTabsToggle<CR>
+let g:NERDTreeWinPos = "right"
+let NERDTreeMapOpenInTab='<ENTER>'
+set switchbuf=useopen,usetab
 
 " gui tabs
 source $HOME/.vim/tabs.vim
@@ -83,3 +89,6 @@ inoremap <C-w> <Esc>:conf q<CR>
 
 " others
 source $HOME/.vim/stripWhitespace.vim
+
+" All Plugins must be added before the following line
+call vundle#end()

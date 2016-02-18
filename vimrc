@@ -39,9 +39,9 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'rc'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<c-t>'],
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>']
     \ }
-"    \ 'AcceptSelection("e")': ['<c-t>'],
 
 " code tab completion (supertab+jedi)
 Plugin 'davidhalter/jedi-vim'

@@ -34,14 +34,14 @@ Plugin 'VundleVim/Vundle.vim'
 "
 " crtlp
 Plugin 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_map = '<c-t>'
+"let g:ctrlp_map = '<c-t>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'rc'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<c-t>'],
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>']
     \ }
+"    \ 'AcceptSelection("e")': ['<c-t>'],
 
 " code tab completion (supertab+jedi)
 Plugin 'davidhalter/jedi-vim'
@@ -70,6 +70,9 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 Plugin 'xolox/vim-easytags'
+let g:easytags_async = 1
+let g:easytags_always_enabled = 1
+
 Plugin 'xolox/vim-misc'
 
 "nerdtree
@@ -78,9 +81,14 @@ Plugin 'jistr/vim-nerdtree-tabs'
 map <C-n> <plug>NERDTreeTabsToggle<CR>
 let g:NERDTreeWinPos = "right"
 let NERDTreeMapOpenInTab='<ENTER>'
-let g:NERDTreeWinSize=25
+let g:NERDTreeWinSize=30
+"let NERDTreeMouseMode=3 "TODO
 set switchbuf=useopen,usetab
 map <leader>nf :NERDTreeTabsFind <CR>
+
+"taglist
+Plugin 'vim-scripts/taglist.vim'
+nnoremap <C-t> :TlistToggle<CR>
 
 " others
 source $HOME/.vim/stripWhitespace.vim

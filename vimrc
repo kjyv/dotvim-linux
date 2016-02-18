@@ -40,7 +40,7 @@ let g:ctrlp_working_path_mode = 'rc'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("e")': ['<c-t>'],
-    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>']
     \ }
 
 " code tab completion (supertab+jedi)
@@ -78,17 +78,14 @@ Plugin 'jistr/vim-nerdtree-tabs'
 map <C-n> <plug>NERDTreeTabsToggle<CR>
 let g:NERDTreeWinPos = "right"
 let NERDTreeMapOpenInTab='<ENTER>'
+let g:NERDTreeWinSize=25
 set switchbuf=useopen,usetab
-
-" gui tabs
-source $HOME/.vim/tabs.vim
-noremap <c-tab> :tabnext<cr>
-noremap <c-s-tab> :tabprev<cr>
-nnoremap <C-w> :conf q<CR>
-inoremap <C-w> <Esc>:conf q<CR>
+map <leader>nf :NERDTreeTabsFind <CR>
 
 " others
 source $HOME/.vim/stripWhitespace.vim
+nnoremap <M-Left> <C-O>
+nnoremap <M-Right> <C-i>
 
 " All Plugins must be added before the following line
 call vundle#end()

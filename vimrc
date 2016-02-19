@@ -18,13 +18,7 @@ set ignorecase
 set smartcase
 set number
 
-syntax on
-filetype plugin indent on
-
-" pathogen
-" execute pathogen#infect()
-
-" Setup vundle and Plugins
+" Vundle and Plugins
 let g:vundle_default_git_proto = 'git'
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -56,6 +50,7 @@ let g:jedi#use_tabs_not_buffers = 1
 let g:jedi#show_call_signatures = 0
 let g:jedi#popup_on_dot = 1
 autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal completeopt-=preview
 
 " cmds tab completion
 set wildmode=longest,list,full
@@ -90,6 +85,18 @@ map <leader>nf :NERDTreeTabsFind <CR>
 Plugin 'vim-scripts/taglist.vim'
 nnoremap <C-t> :TlistToggle<CR>
 
+"syntastic
+Plugin 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height = 3
+
 " others
 source $HOME/.vim/stripWhitespace.vim
 nnoremap <M-Left> <C-O>
@@ -97,3 +104,6 @@ nnoremap <M-Right> <C-i>
 
 " All Plugins must be added before the following line
 call vundle#end()
+
+syntax on
+filetype plugin indent on

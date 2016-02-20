@@ -1,4 +1,7 @@
-set encoding=utf-8
+if !has('nvim')
+    set encoding=utf-8
+endif
+
 "set guifont=Source\ Code\ Pro\ Medium:h11
 set guifont=Monaco\ for\ Powerline:h11
 

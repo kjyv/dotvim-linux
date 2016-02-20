@@ -1,15 +1,9 @@
-
-set tabstop=2
-set shiftwidth=2
-set expandtab
-
-"vim modeline are insecure, but can be useful
-"set modeline
-"set modelines=1
+set encoding=utf-8
+"set guifont=Source\ Code\ Pro\ Medium:h11
+set guifont=Monaco\ for\ Powerline:h11
 
 syntax on
 filetype plugin indent on
-
 set breakindent   " (needs vim >= 7.4.338)
 
 " searching
@@ -36,14 +30,14 @@ nnoremap <M-Right> <C-i>
 set showmatch    " show matching braces
 
 if has("gui_running")
+  set mouse=a
+
   " no toolbar
   set guioptions-=T
 
   "save with ctrl-s
   nnoremap <silent> <C-S> :<C-u>Update<CR>
   inoremap <c-s> <c-o>:Update<CR>
-
-  set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
 
   "gui tabs
   source $HOME/.vim/tabs.vim

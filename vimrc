@@ -2,8 +2,17 @@
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 " source settings
+execute "source ".s:path."/editing.vim"
 execute "source ".s:path."/interface.vim"
 execute "source ".s:path."/stripWhitespace.vim"
+
+if has("unix")
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+        execute "source ".s:path."/osx.vim"
+        execute "source ".s:path."/tex.vim"
+    endif
+endif
 
 " load plugins
 
@@ -49,9 +58,6 @@ set wildmenu
 Plug 'vim-airline/vim-airline'
 set laststatus=2
 let g:airline_powerline_fonts = 1
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
 
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
@@ -59,8 +65,8 @@ let g:easytags_async = 1
 let g:easytags_always_enabled = 1
 
 "nerdtree
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'jistr/vim-nerdtree-tabs', { 'on':  'NERDTreeTabsToggle' }
 map <C-n> <plug>NERDTreeTabsToggle<CR>
 let g:NERDTreeWinPos = "right"
 let NERDTreeMapOpenInTab='<ENTER>'
@@ -86,6 +92,10 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 3
+
+"latex-suite
+Plug 'gerw/vim-latex-suite', { 'on': '<Plug>Tex_Compile' }
+"also consider: Plug 'lervag/vimtex'
 
 " all Plugins must be added before the following line
 call plug#end()

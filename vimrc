@@ -1,33 +1,22 @@
-set tabstop=2
-set shiftwidth=2
-set expandtab
+"get this file's location (to be relative for e.g. neovim)
+let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
-set nocompatible
-filetype plugin on
-"set modeline
-"set modelines=1
-set breakindent   " (needs vim >= 7.4.338)
+" source settings
+execute "source ".s:path."/interface.vim"
+execute "source ".s:path."/stripWhitespace.vim"
 
-" show all whitespace (needs vim >= 7.4.710)
-" set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
-" set list
+" load plugins
 
-" searching
-set incsearch
-set ignorecase
-set smartcase
-set number
+" install vim-plug and plugins (if not already existing)
+if empty(glob(s:path."/autoload/plug.vim"))
+    execute '!curl -fLo '.s:path.'/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
 
-" Vundle and Plugins
-let g:vundle_default_git_proto = 'git'
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin(s:path.'/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
-"
 " crtlp
-Plugin 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 "let g:ctrlp_map = '<c-t>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'rc'
@@ -38,8 +27,8 @@ let g:ctrlp_prompt_mappings = {
     \ }
 
 " code tab completion (supertab+jedi)
-Plugin 'davidhalter/jedi-vim'
-Plugin 'ervandew/supertab'
+Plug 'davidhalter/jedi-vim'
+Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabDefaultCompletionTypeDiscovery = [
       \ "&omnifunc:<c-x><c-o>",
@@ -57,22 +46,21 @@ set wildmode=longest,list,full
 set wildmenu
 
 " airline
-Plugin 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 set laststatus=2
 let g:airline_powerline_fonts = 1
 if $COLORTERM == 'gnome-terminal'
   set t_Co=256
 endif
 
-Plugin 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
 let g:easytags_async = 1
 let g:easytags_always_enabled = 1
 
-Plugin 'xolox/vim-misc'
-
 "nerdtree
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 map <C-n> <plug>NERDTreeTabsToggle<CR>
 let g:NERDTreeWinPos = "right"
 let NERDTreeMapOpenInTab='<ENTER>'
@@ -82,13 +70,15 @@ set switchbuf=useopen,usetab
 map <leader>nf :NERDTreeTabsFind <CR>
 
 "taglist
-Plugin 'vim-scripts/taglist.vim'
+Plug 'vim-scripts/taglist.vim'
 nnoremap <C-t> :TlistToggle<CR>
 
 "syntastic
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+if exists('g:loaded_syntastic_plugin')
+   set statusline+=%{SyntasticStatuslineFlag()}
+endif
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
@@ -97,13 +87,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 3
 
-" others
-source $HOME/.vim/stripWhitespace.vim
-nnoremap <M-Left> <C-O>
-nnoremap <M-Right> <C-i>
+" all Plugins must be added before the following line
+call plug#end()
 
-" All Plugins must be added before the following line
-call vundle#end()
-
-syntax on
-filetype plugin indent on

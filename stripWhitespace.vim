@@ -1,3 +1,5 @@
+"automaticallz strip trailing whitespace upons saving
+
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
     let c = col(".")

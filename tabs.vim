@@ -1,3 +1,4 @@
+" set some more meaningful tab labels
     function GuiTabLabel()
       let label = ''
       let bufnrlist = tabpagebuflist(v:lnum)

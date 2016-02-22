@@ -106,5 +106,6 @@ Plug 'NLKNguyen/papercolor-theme'
 " all Plugins must be added before the following line
 call plug#end()
 
+set t_Co=256
 set background=dark
 colorscheme PaperColor

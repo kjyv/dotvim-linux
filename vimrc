@@ -5,6 +5,7 @@ let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 execute "source ".s:path."/editing.vim"
 execute "source ".s:path."/interface.vim"
 execute "source ".s:path."/stripWhitespace.vim"
+execute "source ".s:path."/last_position.vim"
 
 if has("unix")
     let s:uname = system("uname")
@@ -65,8 +66,8 @@ let g:easytags_async = 1
 let g:easytags_always_enabled = 1
 
 "nerdtree
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'jistr/vim-nerdtree-tabs', { 'on':  'NERDTreeTabsToggle' }
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 map <C-n> <plug>NERDTreeTabsToggle<CR>
 let g:NERDTreeWinPos = "right"
 let NERDTreeMapOpenInTab='<ENTER>'
@@ -74,6 +75,9 @@ let g:NERDTreeWinSize=30
 "let NERDTreeMouseMode=3 "TODO
 set switchbuf=useopen,usetab
 map <leader>nf :NERDTreeTabsFind <CR>
+if has("gui_macvim")
+    let g:nerdtree_tabs_open_on_gui_startup=0
+endif
 
 "taglist
 Plug 'vim-scripts/taglist.vim'
@@ -94,9 +98,13 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 3
 
 "latex-suite
-Plug 'gerw/vim-latex-suite', { 'on': '<Plug>Tex_Compile' }
+Plug 'gerw/vim-latex-suite'
 "also consider: Plug 'lervag/vimtex'
+
+Plug 'NLKNguyen/papercolor-theme'
 
 " all Plugins must be added before the following line
 call plug#end()
 
+set background=dark
+colorscheme PaperColor

@@ -18,7 +18,14 @@ let g:Tex_IgnoredWarnings ='
 
 " ignore all warnings below level 4
 let g:TCLevel = 4
-
-" one last thing for latex
 let g:tex_flavor = 'latex'
 let g:Tex_GotoError=0
+
+" Change default target to pdf, if not dvi is used
+let g:Tex_DefaultTargetFormat = 'pdf'
+
+" Setup the compile rule for pdf to use pdflatex with synctex enabled
+let g:Tex_CompileRule_pdf = 'latexmk -pdf -latexoption="-synctex=1" --interaction=nonstopmode $*'
+
+" PDF display rule
+let g:Tex_ViewRule_pdf = 'open -a Skim'

@@ -7,3 +7,5 @@ noremap <c-tab> :tabnext<cr>
 noremap <c-s-tab> :tabprev<cr>
 map <SwipeLeft> :tabprev<cr>
 map <SwipeRight> :tabnext<cr>
+
+let mapleader=','

@@ -46,8 +46,11 @@ if has("gui_running")
   source $HOME/.vim/tabs.vim
   noremap <c-tab> :tabnext<cr>
   noremap <c-s-tab> :tabprev<cr>
-  nnoremap <C-w> :conf q<CR>
-  inoremap <C-w> <Esc>:conf q<CR>
+
+  if !has("gui_macvim")
+    nnoremap <C-w> :conf q<CR>
+    inoremap <C-w> <Esc>:conf q<CR>
+  endif
 
   " use ctrl + mousewheel to change font size
   nnoremap <C-Up> :silent! let &guifont = substitute(&guifont, '\d\+', '\=eval(submatch(0)+1)',     '')<CR>

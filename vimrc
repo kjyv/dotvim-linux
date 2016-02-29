@@ -97,24 +97,26 @@ endif
 Plug 'vim-scripts/taglist.vim'
 nnoremap <C-t> :TlistToggle<CR>
 
-"syntastic
-"Plug 'scrooloose/syntastic'
-"set statusline+=%#warningmsg#
-"if exists('g:loaded_syntastic_plugin')
-"   set statusline+=%{SyntasticStatuslineFlag()}
-"endif
-"set statusline+=%*
+if has('nvim')
+    Plug 'benekastah/neomake'
+    autocmd! BufWritePost * Neomake
+    let g:neomake_open_list=1
+    let g:neomake_list_height=3
+else
+    "syntastic
+    Plug 'scrooloose/syntastic'
+    set statusline+=%#warningmsg#
+    if exists('g:loaded_syntastic_plugin')
+       set statusline+=%{SyntasticStatuslineFlag()}
+    endif
+    set statusline+=%*
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_loc_list_height = 3
-
-Plug 'benekastah/neomake'
-autocmd! BufWritePost * Neomake
-let g:neomake_open_list=1
-let g:neomake_list_height=3
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+    let g:syntastic_loc_list_height = 3
+endif
 
 "latex-suite
 Plug 'gerw/vim-latex-suite'

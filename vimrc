@@ -58,12 +58,19 @@ Plug 'mhinz/vim-startify'
 set sessionoptions-=buffers
 set sessionoptions-=help
 let g:startify_session_dir = '~/.vim/sessions'
-let g:startify_session_autoload = 1
-let g:startify_session_persistence = 1
+let g:startify_session_autoload = 0
+let g:startify_session_persistence = 0
+let g:startify_change_to_dir = 1
+let NERDTreeHijackNetrw = 0
+autocmd VimLeave * NERDTreeTabsClose
+autocmd VimLeave * SDelete! default.vim
+autocmd VimLeave * SSave default.vim
+set shortmess+=O
 
 "Plug 'xolox/vim-session'
 "let g:session_lock_enabled = 0
-"let g:session_autoload='yes'
+"let g:session_autoload='no'
+"let g:session_autosave = 'no'
 "if !has("gui_running") || has("gui_macvim")
 "  let g:session_autosave = 0
 "  let g:session_autoload = 0
@@ -79,9 +86,11 @@ let g:NERDTreeWinSize=30
 "let NERDTreeMouseMode=3 "TODO
 set switchbuf=useopen,usetab
 map <leader>nf :NERDTreeTabsFind <CR>
+map <leader>cw :NERDTreeCWD <CR>
+let g:nerdtree_tabs_autofind=1
+let g:nerdtree_tabs_focus_on_files=1
 if has("gui_macvim")
     let g:nerdtree_tabs_open_on_gui_startup=0
-
 endif
 
 "taglist

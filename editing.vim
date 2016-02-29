@@ -11,3 +11,6 @@ set smarttab
 
 set tw=100  "line break width, use gqgq to break lines automatically
 
+"always use black hole register
+"http://vim.wikia.com/wiki/Replace_a_word_with_yanked_text
+xnoremap p "_dP

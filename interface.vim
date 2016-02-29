@@ -2,8 +2,12 @@ if !has('nvim')
     set encoding=utf-8
 endif
 
-"set guifont=Source\ Code\ Pro\ Medium:h11
-set guifont=Monaco\ for\ Powerline:h11
+if has('gui_macvim')
+    set guifont=Monaco\ for\ Powerline:h11
+else
+        "set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
+        set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+endif
 
 syntax on
 filetype plugin indent on
@@ -31,6 +35,8 @@ nnoremap <M-Left> <C-O>
 nnoremap <M-Right> <C-i>
 
 set showmatch    " show matching braces
+
+set nofoldenable
 
 if has("gui_running")
   set mouse=a

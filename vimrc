@@ -22,6 +22,9 @@ let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>']
     \ }
 
+" allow block selection also on indents
+Plug 'michaeljsmith/vim-indent-object'
+
 " code tab completion (supertab+jedi)
 Plug 'davidhalter/jedi-vim'
 Plug 'ervandew/supertab'
@@ -30,7 +33,7 @@ let g:SuperTabDefaultCompletionTypeDiscovery = [
       \ "&omnifunc:<c-x><c-o>",
       \ "&completefunc:<c-x><c-u>",
       \ ]
-let g:SuperTabLongestHighlight = 0  "until https://github.com/ervandew/supertab/issues/162 is fixed
+let g:SuperTabLongestHighlight = 1  "until https://github.com/ervandew/supertab/issues/162 is fixed
 let g:SuperTabCrMapping = 1
 let g:jedi#use_tabs_not_buffers = 1
 let g:jedi#show_call_signatures = 0
@@ -53,6 +56,7 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
 let g:easytags_async = 1
 let g:easytags_always_enabled = 1
+let g:easytags_syntax_keyword = 'always'
 
 Plug 'mhinz/vim-startify'
 set sessionoptions-=buffers
@@ -62,10 +66,12 @@ let g:startify_session_autoload = 0
 let g:startify_session_persistence = 0
 let g:startify_change_to_dir = 1
 let NERDTreeHijackNetrw = 0
-autocmd VimLeave * NERDTreeTabsClose
-autocmd VimLeave * SDelete! default.vim
-autocmd VimLeave * SSave default.vim
-set shortmess+=O
+if has("gui_running")
+    autocmd VimLeave * NERDTreeTabsClose
+    autocmd VimLeave * SDelete! default.vim
+    autocmd VimLeave * SSave default.vim
+    set shortmess+=O
+endif
 
 "Plug 'xolox/vim-session'
 "let g:session_lock_enabled = 0
@@ -89,9 +95,9 @@ map <leader>nf :NERDTreeTabsFind <CR>
 map <leader>cw :NERDTreeCWD <CR>
 let g:nerdtree_tabs_autofind=1
 let g:nerdtree_tabs_focus_on_files=1
-if has("gui_macvim")
+"if has("gui_macvim")
     let g:nerdtree_tabs_open_on_gui_startup=0
-endif
+"endif
 
 "taglist
 Plug 'vim-scripts/taglist.vim'
@@ -136,6 +142,8 @@ execute "source ".s:path."/editing.vim"
 execute "source ".s:path."/interface.vim"
 execute "source ".s:path."/stripWhitespace.vim"
 execute "source ".s:path."/last_position.vim"
+execute "source ".s:path."/persistent_undo.vim"
+execute "source ".s:path."/highlightCursor.vim"
 
 if has("unix")
     let s:uname = system("uname")

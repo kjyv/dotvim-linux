@@ -12,12 +12,27 @@ endif
 syntax on
 filetype plugin indent on
 set breakindent   " (needs vim >= 7.4.338)
+set hidden
 
 " searching
 set incsearch
 set ignorecase
 set smartcase
 set number
+
+" text selection with shift arrow (page jumping is annoying)
+imap <S-Up> <Up>
+imap <S-Down> <Down>
+imap <S-Left> <Left>
+imap <S-Right> <Right>
+nmap <S-Up> v<Up>
+nmap <S-Down> v<Down>
+nmap <S-Left> v<Left>
+nmap <S-Right> v<Right>
+vmap <S-Up> <Up>
+vmap <S-Down> <Down>
+vmap <S-Left> <Left>
+vmap <S-Right> <Right>
 
 " show some whitespace characters
 set list                  " show line-endings, tabs and trailing spaces
@@ -29,14 +44,24 @@ set lcs=trail:·,tab:»·    " trailing spaces and tabs are shown but not eol
 
 "set mouse mode in terminal
 set mouse=v
+set guicursor+=a:blinkon0
 
-" forward/backward with alt-left/-right
-nnoremap <M-Left> <C-O>
-nnoremap <M-Right> <C-i>
+" jumping to searches with some spacing from top/bottom
+set scrolloff=5
+
+" navigate jumplist with alt-left/-right
+"nnoremap <M-Left> <C-O>
+"nnoremap <M-Right> <C-i>
+
+" navigate changelist with alt-left/-right
+nnoremap <M-Left> g;
+nnoremap <M-Right> g,
 
 set showmatch    " show matching braces
+set nofoldenable " no folds by default
 
-set nofoldenable
+" use non backracking regexp engine (faster)
+set regexpengine=2
 
 if has("gui_running")
   set mouse=a

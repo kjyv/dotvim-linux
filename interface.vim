@@ -11,7 +11,9 @@ endif
 
 syntax on
 filetype plugin indent on
-set breakindent   " (needs vim >= 7.4.338)
+if has("patch-7.4-399")
+  set breakindent   " (needs vim >= 7.4.338)
+endif
 set hidden
 
 " searching

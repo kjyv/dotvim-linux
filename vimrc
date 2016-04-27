@@ -87,21 +87,30 @@ Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 map <C-n> <plug>NERDTreeTabsToggle<CR>
 let g:NERDTreeWinPos = "right"
-let NERDTreeMapOpenInTab='<ENTER>'
+"let NERDTreeMapOpenInTab='<ENTER>'
 let g:NERDTreeWinSize=30
 "let NERDTreeMouseMode=3 "TODO
-set switchbuf=useopen,usetab
+"set switchbuf=useopen,usetab
 map <leader>nf :NERDTreeTabsFind <CR>
 map <leader>cw :NERDTreeCWD <CR>
-let g:nerdtree_tabs_autofind=1
+"let g:nerdtree_tabs_autofind=1
 let g:nerdtree_tabs_focus_on_files=1
 "if has("gui_macvim")
     let g:nerdtree_tabs_open_on_gui_startup=0
 "endif
 
 "taglist
-Plug 'vim-scripts/taglist.vim'
-nnoremap <C-t> :TlistToggle<CR>
+"Plug 'vim-scripts/taglist.vim'
+"nnoremap <C-t> :TlistToggle<CR>
+
+Plug 'majutsushi/tagbar'
+nnoremap <C-t> :TagbarToggle<CR>
+let g:tagbar_left = 1
+let g:tagbar_width = 30
+let g:tagbar_indent = 1
+let g:tagbar_compact = 1
+let g:tagbar_singleclick = 1
+let g:tagbar_iconchars = ['▸', '▾']
 
 if has('nvim')
     Plug 'benekastah/neomake'

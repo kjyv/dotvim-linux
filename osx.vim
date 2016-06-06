@@ -3,7 +3,7 @@
 "    map <D-t> :CtrlP<CR>
 "endif
 
-map <SwipeLeft> :tabprev<cr>
-map <SwipeRight> :tabnext<cr>
+map <SwipeLeft> g;<cr>
+map <SwipeRight> g,<cr>
 
 let mapleader=','

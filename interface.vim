@@ -49,7 +49,7 @@ set mouse=v
 set guicursor+=a:blinkon0
 
 " jumping to searches with some spacing from top/bottom
-set scrolloff=5
+" set scrolloff=5
 
 " navigate jumplist with alt-left/-right
 "nnoremap <M-Left> <C-O>
@@ -62,10 +62,10 @@ nnoremap <M-Right> g,
 set showmatch    " show matching braces
 set nofoldenable " no folds by default
 
-" use non backracking regexp engine (faster)
-set regexpengine=2
-
 if has("gui_running")
+  " use non backracking regexp engine (faster)
+  set regexpengine=2
+
   set mouse=a
 
   " no toolbar

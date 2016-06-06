@@ -133,11 +133,19 @@ else
     let g:syntastic_check_on_open = 1
     let g:syntastic_check_on_wq = 0
     let g:syntastic_loc_list_height = 3
+    " set to passive mode for some (slow) filetypes
+    let g:syntastic_mode_map = {
+            \ "mode": "active",
+            \ "active_filetypes": [],
+            \ "passive_filetypes": ["python"] }
 endif
 
 "latex-suite
 Plug 'gerw/vim-latex-suite'
 "also consider: Plug 'lervag/vimtex'
+
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 Plug 'NLKNguyen/papercolor-theme'
 

@@ -111,6 +111,8 @@ let g:tagbar_indent = 1
 let g:tagbar_compact = 1
 let g:tagbar_singleclick = 1
 let g:tagbar_iconchars = ['▸', '▾']
+let g:tagbar_foldlevel = 1
+let g:tagbar_sort = 0
 
 if has('nvim')
     Plug 'benekastah/neomake'

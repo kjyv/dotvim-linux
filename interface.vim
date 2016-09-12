@@ -63,8 +63,9 @@ set showmatch    " show matching braces
 set nofoldenable " no folds by default
 
 if has("gui_running")
-  " use non backracking regexp engine (faster)
-  set regexpengine=2
+  " 2 use non backracking regexp engine (faster)
+  " 1 use old engine (faster for eg easytags?)
+  set regexpengine=1
 
   set mouse=a
 

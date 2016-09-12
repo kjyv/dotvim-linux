@@ -35,9 +35,10 @@ let g:SuperTabDefaultCompletionTypeDiscovery = [
       \ ]
 let g:SuperTabLongestHighlight = 1  "until https://github.com/ervandew/supertab/issues/162 is fixed
 let g:SuperTabCrMapping = 1
-let g:jedi#use_tabs_not_buffers = 1
+let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#show_call_signatures = 0
 let g:jedi#popup_on_dot = 1
+let g:jedi#smart_auto_mappings = 0
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python setlocal completeopt-=preview
 
@@ -57,6 +58,7 @@ Plug 'xolox/vim-easytags'
 let g:easytags_async = 1
 let g:easytags_always_enabled = 1
 let g:easytags_syntax_keyword = 'always'
+let g:easytags_python_enabled = 1
 
 Plug 'mhinz/vim-startify'
 set sessionoptions-=buffers
@@ -98,6 +100,7 @@ let g:nerdtree_tabs_focus_on_files=1
 "if has("gui_macvim")
     let g:nerdtree_tabs_open_on_gui_startup=0
 "endif
+let NERDTreeIgnore = ['\.pyc$']
 
 "taglist
 "Plug 'vim-scripts/taglist.vim'
@@ -113,6 +116,7 @@ let g:tagbar_singleclick = 1
 let g:tagbar_iconchars = ['▸', '▾']
 let g:tagbar_foldlevel = 1
 let g:tagbar_sort = 0
+autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 if has('nvim')
     Plug 'benekastah/neomake'

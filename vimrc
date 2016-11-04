@@ -13,7 +13,7 @@ call plug#begin(s:path.'/plugged')
 
 " crtlp
 Plug 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'rc'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 "open in tabs
@@ -146,6 +146,7 @@ endif
 
 "latex-suite
 Plug 'gerw/vim-latex-suite'
+let g:Imap_UsePlaceHolders = 0
 "also consider: Plug 'lervag/vimtex'
 
 Plug 'airblade/vim-gitgutter'
@@ -157,7 +158,7 @@ Plug 'NLKNguyen/papercolor-theme'
 call plug#end()
 
 set t_Co=256
-set background=dark
+set background=light
 colorscheme PaperColor
 
 " source settings

@@ -11,10 +11,11 @@ let g:Tex_IgnoredWarnings ='
     \"specifier changed to\n".
     \"You have requested\n".
     \"Missing number, treated as zero.\n".
-    \"There were undefined references\n".
-    \"Citation %.%# undefined\n".
     \"Marginpar on page %.%# moved\n".
     \"\oval, \circle, or \line size unavailable\n"'
+
+"    \"There were undefined references\n".
+"    \"Citation %.%# undefined\n".
 
 " ignore all warnings below level 4
 let g:TCLevel = 4
@@ -27,5 +28,8 @@ let g:Tex_DefaultTargetFormat = 'pdf'
 " Setup the compile rule for pdf to use pdflatex with synctex enabled
 let g:Tex_CompileRule_pdf = 'latexmk -pdf -latexoption="-synctex=1" --interaction=nonstopmode $*'
 
+let g:Tex_TreatMacViewerAsUNIX = 1
+
 " PDF display rule
-let g:Tex_ViewRule_pdf = 'open -a Skim'
+"let g:Tex_ViewRule_pdf = 'open -a Skim'
+let g:Tex_ViewRule_pdf = 'Skim'

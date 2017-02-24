@@ -5,8 +5,8 @@ endif
 if has('gui_macvim')
     set guifont=Monaco\ for\ Powerline:h11
 else
-        "set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
-        set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+    "set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
+     set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
 endif
 
 syntax on
@@ -91,5 +91,10 @@ if has("gui_running")
   nnoremap <C-Down> :silent! let &guifont = substitute(&guifont, '\d\+', '\=eval(submatch(0)-1)    ', '')<CR>
 
   "set showtabline=2 " always show tabbar, fixes resizing issues
+else
+  "some terminal speed-ups
+  set nocursorline
+  set lazyredraw
+  set nocursorcolumn
 endif
 

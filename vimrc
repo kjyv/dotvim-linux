@@ -33,7 +33,7 @@ let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#smart_auto_mappings = 0
 
 ""disable some stuff for performance
-let g:jedi#show_call_signatures = 1
+let g:jedi#show_call_signatures = 0
 let g:jedi#popup_on_dot = 0
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -125,6 +125,9 @@ if has("gui_running")
     autocmd BufEnter * nested :call tagbar#autoopen(0)
 endif
 
+" format code
+Plug 'sbdchd/neoformat'
+
 "if has('nvim')
 "    Plug 'benekastah/neomake'
 "    autocmd! BufWritePost * Neomake
@@ -142,10 +145,12 @@ endif
 "    Plug 'dojoteef/neomake-autolint'
 "else
     Plug 'w0rp/ale'
-    let g:ale_lint_delay = 100
-    let g:ale_linters = {'python': ['pylint', 'flake8']}
+    let g:ale_lint_delay = 50
+    "let g:ale_linters = {'python': ['mypy', 'pylint']}
+    let g:ale_linters = {'python': ['mypy']}
     highlight clear ALEErrorSign
     highlight clear ALEWarningSign
+    "highlight ALEError ctermbg=none guibg=NONE gui=undercurl guisp=red
 
     "syntastic
 "    Plug 'scrooloose/syntastic'

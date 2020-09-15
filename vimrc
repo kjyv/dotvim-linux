@@ -15,14 +15,15 @@ call plug#begin(s:path.'/plugged')
 Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'rc'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.swo,*.pyc,*.log,*.out
 "open in tabs
 let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("e")': ['<c-t>'],
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>']
     \ }
+let g:ctrlp_root_markers = ['pom.xml', '.p4ignore', 'requirements.txt', 'main.tex', 'setup.py', 'Makefile.in', '.gitignore']
 
-" allow block selection also on indents
+" allow indents also on block selection
 Plug 'michaeljsmith/vim-indent-object'
 
 " completion
@@ -128,49 +129,16 @@ endif
 " format code
 Plug 'sbdchd/neoformat'
 
-"if has('nvim')
-"    Plug 'benekastah/neomake'
-"    autocmd! BufWritePost * Neomake
-"    let g:neomake_open_list=0
-"    let g:neomake_list_height=3
-"    let g:neomake_error_sign = {
-"            \ 'text': '>>',
-"            \ 'texthl': 'ErrorMsg',
-"            \ }
-"    hi MyWarningMsg ctermbg=3 ctermfg=0
-"    let g:neomake_warning_sign = {
-"            \ 'text': '>>',
-"            \ 'texthl': 'MyWarningMsg',
-"            \ }
-"    Plug 'dojoteef/neomake-autolint'
-"else
-    Plug 'w0rp/ale'
-    let g:ale_lint_delay = 50
-    "let g:ale_linters = {'python': ['mypy', 'pylint']}
-    let g:ale_linters = {'python': ['mypy']}
-    highlight clear ALEErrorSign
-    highlight clear ALEWarningSign
-    "highlight ALEError ctermbg=none guibg=NONE gui=undercurl guisp=red
-
-    "syntastic
-"    Plug 'scrooloose/syntastic'
-"    set statusline+=%#warningmsg#
-"    if exists('g:loaded_syntastic_plugin')
-"       set statusline+=%{SyntasticStatuslineFlag()}
-"    endif
-"    set statusline+=%*
-"
-"    let g:syntastic_always_populate_loc_list = 1
-"    let g:syntastic_auto_loc_list = 1
-"    let g:syntastic_check_on_open = 1
-"    let g:syntastic_check_on_wq = 0
-"    let g:syntastic_loc_list_height = 3
-"    " set to passive mode for some (slow) filetypes
-"    let g:syntastic_mode_map = {
-"            \ "mode": "active",
-"            \ "active_filetypes": [],
-"            \ "passive_filetypes": ["python"] }
-"endif
+" linting
+Plug 'w0rp/ale'
+let g:ale_lint_delay = 50
+"let g:ale_linters = {'python': ['mypy', 'pylint']}
+let g:ale_linters = {'python': ['mypy'], 'lint_file':1}
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+"highlight ALEError ctermbg=none guibg=NONE gui=undercurl guisp=red
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 1
 
 "latex-suite
 "Plug 'gerw/vim-latex-suite'
@@ -185,12 +153,23 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'NLKNguyen/papercolor-theme'
 
+" improved html indenting and syntax
+Plug 'othree/html5.vim'
+
 " all Plugins must be added before the following line
 call plug#end()
 
 set t_Co=256
 set background=light
 colorscheme PaperColor
+" disallow potentially insecure modelines
+set nomodeline
+
+if strftime("%H") >= 5 && strftime("%H") < 20
+  set background=light
+else
+  set background=dark
+endif
 
 " source settings
 execute "source ".s:path."/editing.vim"

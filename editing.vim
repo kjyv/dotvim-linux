@@ -19,3 +19,8 @@ set formatoptions=croql "tcq
 noremap d "_d
 noremap dd "_dd
 noremap D "_D
+
+" paste without yanking
+vnoremap p "_dP
+
+set backspace=2

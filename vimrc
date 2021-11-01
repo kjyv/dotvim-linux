@@ -22,6 +22,15 @@ let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>']
     \ }
 let g:ctrlp_root_markers = ['pom.xml', '.p4ignore', 'requirements.txt', 'main.tex', 'setup.py', 'Makefile.in', '.gitignore']
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|Library'
+
+if has("gui_macvim")
+    map <S-LeftMouse> <C-]>
+endif
+
+"https://github.com/puremourning/vimspector
+"https://github.com/neoclide/coc.nvim
 
 " allow indents also on block selection
 Plug 'michaeljsmith/vim-indent-object'
@@ -64,6 +73,15 @@ set shortmess+=c
 "inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 "inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+
+"Plug 'Shougo/deoplete.nvim'
+"if !has('nvim')
+"    Plug 'roxma/nvim-yarp'
+"    Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+"let g:deoplete#enable_at_startup = 1
+"Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+"Plug 'zxqfl/tabnine-vim'
 
 " airline
 Plug 'vim-airline/vim-airline'
@@ -122,6 +140,7 @@ let g:tagbar_singleclick = 1
 let g:tagbar_iconchars = ['▸', '▾']
 let g:tagbar_foldlevel = 2
 let g:tagbar_sort = 0
+autocmd Filetype html let b:tagbar_ignore = 1
 if has("gui_running")
     autocmd BufEnter * nested :call tagbar#autoopen(0)
 endif
@@ -155,6 +174,11 @@ Plug 'NLKNguyen/papercolor-theme'
 
 " improved html indenting and syntax
 Plug 'othree/html5.vim'
+let g:html5_rdfa_attributes_complete = 0
+let g:html5_microdata_attributes_complete = 0
+let g:html5_aria_attributes_complete = 0
+
+Plug 'pangloss/vim-javascript'
 
 " all Plugins must be added before the following line
 call plug#end()
@@ -165,6 +189,7 @@ colorscheme PaperColor
 " disallow potentially insecure modelines
 set nomodeline
 
+"night mode
 if strftime("%H") >= 5 && strftime("%H") < 20
   set background=light
 else
@@ -178,6 +203,9 @@ execute "source ".s:path."/stripWhitespace.vim"
 execute "source ".s:path."/last_position.vim"
 execute "source ".s:path."/persistent_undo.vim"
 execute "source ".s:path."/highlightCursor.vim"
+
+filetype plugin on
+runtime macros/matchit.vim
 
 if has("unix")
     let s:uname = system("uname")

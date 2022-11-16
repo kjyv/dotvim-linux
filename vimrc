@@ -180,6 +180,8 @@ let g:html5_aria_attributes_complete = 0
 
 Plug 'pangloss/vim-javascript'
 
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+
 " all Plugins must be added before the following line
 call plug#end()
 

@@ -192,7 +192,7 @@ colorscheme PaperColor
 set nomodeline
 
 "night mode
-if has("gui_running") && strftime("%H") >= 5 && strftime("%H") < 20
+if has("gui_running") && strftime("%H") >= 7 && strftime("%H") < 21
   set background=light
 else
   set background=dark

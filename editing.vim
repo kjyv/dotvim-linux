@@ -13,6 +13,9 @@ set tw=100  "line break width, use gqgq to break lines automatically
 set wrap nolist
 set formatoptions=croql "tcq
 
+let mapleader=','
+let g:mapleader = ","
+
 "always use black hole register to delete (cut and paste still as normal)
 "http://vim.wikia.com/wiki/Replace_a_word_with_yanked_text
 
@@ -24,3 +27,14 @@ noremap D "_D
 vnoremap p "_dP
 
 set backspace=2
+
+" center the screen after jumping
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap # #zzzv
+nnoremap * *zzzv
+
+" center after half screen jump
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+

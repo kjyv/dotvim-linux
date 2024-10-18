@@ -3,3 +3,6 @@ undo
 sessions
 spell
 plugged
+*.swp
+.DS_Store
+autoload/plug.vim

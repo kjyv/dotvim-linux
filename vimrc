@@ -32,12 +32,20 @@ endif
 "https://github.com/puremourning/vimspector
 "https://github.com/neoclide/coc.nvim
 
-" allow indents also on block selection
+" allow selection also on blocks for python
+" via text objects (e.g. "vai" or "vii")
 Plug 'michaeljsmith/vim-indent-object'
+
+" comment out code with "gc" (visual mode) or "gcc" (current line)
+Plug 'tpope/vim-commentary'
+
+" surround things, e.g. select in visual mode, then S' (or yse' in normal mode for next word) or cs'" to change from ' to "
+Plug 'tpope/vim-surround'
 
 " completion
 
 " code static analysis and completion
+" TODO: probably better to replace this with some LSP based thing for proper python development
 Plug 'davidhalter/jedi-vim'
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#smart_auto_mappings = 0
@@ -97,6 +105,7 @@ let g:easytags_always_enabled = 1
 let g:easytags_syntax_keyword = 'always'
 let g:easytags_python_enabled = 1
 
+Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
 set sessionoptions-=buffers
 set sessionoptions-=help
@@ -145,6 +154,9 @@ if has("gui_running")
     autocmd BufEnter * nested :call tagbar#autoopen(0)
 endif
 
+Plug 'wellle/context.vim'
+" let g:context_enabled = 1
+
 " format code
 Plug 'sbdchd/neoformat'
 
@@ -160,16 +172,15 @@ let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 1
 
 "latex-suite
-"Plug 'gerw/vim-latex-suite'
-Plug 'vim-latex/vim-latex'
-let g:Imap_UsePlaceHolders = 0
-let g:Tex_MathMenus = 0
-let g:Tex_PackagesMenu = 0
+" Plug 'vim-latex/vim-latex'
+" let g:Imap_UsePlaceHolders = 0
+" let g:Tex_MathMenus = 0
+" let g:Tex_PackagesMenu = 0
 "also consider: Plug 'lervag/vimtex'
+"or Plug 'gerw/vim-latex-suite'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-
 Plug 'NLKNguyen/papercolor-theme'
 
 " improved html indenting and syntax
@@ -177,7 +188,6 @@ Plug 'othree/html5.vim'
 let g:html5_rdfa_attributes_complete = 0
 let g:html5_microdata_attributes_complete = 0
 let g:html5_aria_attributes_complete = 0
-
 Plug 'pangloss/vim-javascript'
 
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
@@ -186,19 +196,27 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 call plug#end()
 
 set t_Co=256
-set background=light
+set background=dark
 colorscheme PaperColor
+
+"night mode
+let os=substitute(system('uname'), '\n', '', '')
+if has("gui_running") && os != "Darwin"
+    "Note: macOS dark mode is handled using system setting in osx.vim
+    if strftime("%H") >= 7 && strftime("%H") < 21
+        set background=light
+    endif
+endif
+
 " disallow potentially insecure modelines
 set nomodeline
 
-"night mode
-if has("gui_running") && strftime("%H") >= 7 && strftime("%H") < 21
-  set background=light
-else
-  set background=dark
+" source some other files
+if os == "Darwin"
+    execute "source ".s:path."/osx.vim"
+    execute "source ".s:path."/tex.vim"
 endif
 
-" source settings
 execute "source ".s:path."/editing.vim"
 execute "source ".s:path."/interface.vim"
 execute "source ".s:path."/stripWhitespace.vim"
@@ -209,11 +227,4 @@ execute "source ".s:path."/highlightCursor.vim"
 filetype plugin on
 runtime macros/matchit.vim
 
-if has("unix")
-    let s:uname = system("uname")
-    if s:uname == "Darwin\n"
-        execute "source ".s:path."/osx.vim"
-        execute "source ".s:path."/tex.vim"
-    endif
-endif
 

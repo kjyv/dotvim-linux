@@ -11,23 +11,27 @@ endif
 
 call plug#begin(s:path.'/plugged')
 
-" fuzzy file opening
-Plug 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_working_path_mode = 'rc'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.swo,*.pyc,*.log,*.out
-"open in tabs
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<c-t>'],
-    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>']
-    \ }
-let g:ctrlp_root_markers = ['pom.xml', '.p4ignore', 'requirements.txt', 'main.tex', 'setup.py', 'Makefile.in', '.gitignore']
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|Library'
+" theming
+Plug 'NLKNguyen/papercolor-theme'
 
-if has("gui_macvim")
-    map <S-LeftMouse> <C-]>
-endif
+" Preview e.g. regexp patterns
+Plug 'markonm/traces.vim'
+
+" use fzf to find files and rg to find in files
+" :Files :Ag :History :Commits etc.
+Plug 'junegunn/fzf.vim' | Plug '/opt/homebrew/opt/fzf'
+let g:fzf_vim = {}
+let g:fzf_vim.buffers_jump = 1
+let g:fzf_action = { 'enter': 'tab split' }
+let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline \'!.venv/\' \'!.mypy_cache/\''
+
+" custom ProjectFiles command to start at .git level
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+command! ProjectFiles execute 'Files' s:find_git_root()
+
+nmap <C-p> :ProjectFiles<CR>
 
 "https://github.com/puremourning/vimspector
 "https://github.com/neoclide/coc.nvim
@@ -43,20 +47,12 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 
 " completion
-
-" code static analysis and completion
-" TODO: probably better to replace this with some LSP based thing for proper python development
-Plug 'davidhalter/jedi-vim'
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#smart_auto_mappings = 0
-
-""disable some stuff for performance
-let g:jedi#show_call_signatures = 0
-let g:jedi#popup_on_dot = 0
-
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 " no docstring popup
 autocmd FileType python setlocal completeopt-=preview
+
+" Plug 'girishji/vimcomplete'
+" set noNewlineInCompletionEver = true
 
 Plug 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = "context"
@@ -75,22 +71,6 @@ set wildmenu
 " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
 set shortmess+=c
 
-"Plug 'maralla/completor.vim'
-"let g:jedi#completions_enabled = 0
-"let g:completor_auto_trigger = 0
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
-
-"Plug 'Shougo/deoplete.nvim'
-"if !has('nvim')
-"    Plug 'roxma/nvim-yarp'
-"    Plug 'roxma/vim-hug-neovim-rpc'
-"endif
-"let g:deoplete#enable_at_startup = 1
-"Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-"Plug 'zxqfl/tabnine-vim'
-
 " airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -98,14 +78,6 @@ set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_theme='powerlineish'
 
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
-let g:easytags_async = 1
-let g:easytags_always_enabled = 1
-let g:easytags_syntax_keyword = 'always'
-let g:easytags_python_enabled = 1
-
-Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-startify'
 set sessionoptions-=buffers
 set sessionoptions-=help
@@ -154,34 +126,67 @@ if has("gui_running")
     autocmd BufEnter * nested :call tagbar#autoopen(0)
 endif
 
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
+let g:easytags_async = 1
+let g:easytags_always_enabled = 1
+let g:easytags_syntax_keyword = 'always'
+let g:easytags_python_enabled = 0
+
+Plug 'easymotion/vim-easymotion'
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+map <leader>w <plug>(easymotion-w)
+map <leader>b <plug>(easymotion-b)
+
+" show context of current position at the top
 Plug 'wellle/context.vim'
 " let g:context_enabled = 1
 
 " format code
-Plug 'sbdchd/neoformat'
+" Plug 'sbdchd/neoformat'
 
 " linting
 Plug 'w0rp/ale'
-let g:ale_lint_delay = 50
-"let g:ale_linters = {'python': ['mypy', 'pylint']}
-let g:ale_linters = {'python': ['mypy'], 'lint_file':1}
+let g:ale_lint_delay = 25
+"let g:ale_linters = {'python': ['mypy', 'ruff'], 'lint_file':1}
+let g:ale_linters = {'python': ['pyright', 'ruff'], 'lint_file':1}
+let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'], 'python': ['ruff'], }
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
-"highlight ALEError ctermbg=none guibg=NONE gui=undercurl guisp=red
+highlight ALEError ctermbg=none guibg=NONE gui=undercurl guisp=red
+autocmd ColorScheme * highlight ALEVirtualTextError ctermfg=red guifg=red
+autocmd ColorScheme * highlight ALEVirtualTextWarning ctermfg=yellow guifg=yellow
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 1
 
-"latex-suite
-" Plug 'vim-latex/vim-latex'
-" let g:Imap_UsePlaceHolders = 0
-" let g:Tex_MathMenus = 0
-" let g:Tex_PackagesMenu = 0
-"also consider: Plug 'lervag/vimtex'
-"or Plug 'gerw/vim-latex-suite'
+function ALELSPMappings()
+    let lsp_found=0
+    for linter in ale#linter#Get(&filetype)
+        if !empty(linter.lsp) && ale#lsp_linter#CheckWithLSP(bufnr(''), linter)
+            let lsp_found=1
+        endif
+    endfor
+    if (lsp_found)
+        nnoremap <buffer> K :ALEDocumentation<cr>
+        nnoremap <buffer> gr :ALEFindReferences<cr>
+        nnoremap <buffer> gd :ALEGoToDefinition<cr>
+        "binding this is still not suported: https://github.com/macvim-dev/macvim/issues/1325
+        "C-LeftMouse is already mapped to this (not sure from where)
+        noremap <buffer> <D-LeftMouse> gd
+        nnoremap <buffer> gy :ALEGoToTypeDefinition<cr>
+        nnoremap <buffer> gh :ALEHover<cr>
 
+        setlocal omnifunc=ale#completion#OmniFunc
+    endif
+endfunction
+autocmd BufRead,FileType * call ALELSPMappings()
+
+" git support
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'NLKNguyen/papercolor-theme'
+
+" automatically switch off relative numbers when they are not useful
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 " improved html indenting and syntax
 Plug 'othree/html5.vim'
@@ -189,8 +194,6 @@ let g:html5_rdfa_attributes_complete = 0
 let g:html5_microdata_attributes_complete = 0
 let g:html5_aria_attributes_complete = 0
 Plug 'pangloss/vim-javascript'
-
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 " all Plugins must be added before the following line
 call plug#end()
@@ -202,7 +205,8 @@ colorscheme PaperColor
 "night mode
 let os=substitute(system('uname'), '\n', '', '')
 if has("gui_running") && os != "Darwin"
-    "Note: macOS dark mode is handled using system setting in osx.vim
+    "Note: macOS dark mode is handled using system setting in macos.vim, so this is only for other
+    "systems
     if strftime("%H") >= 7 && strftime("%H") < 21
         set background=light
     endif
@@ -213,7 +217,7 @@ set nomodeline
 
 " source some other files
 if os == "Darwin"
-    execute "source ".s:path."/osx.vim"
+    execute "source ".s:path."/macos.vim"
     execute "source ".s:path."/tex.vim"
 endif
 
@@ -224,6 +228,7 @@ execute "source ".s:path."/last_position.vim"
 execute "source ".s:path."/persistent_undo.vim"
 execute "source ".s:path."/highlightCursor.vim"
 
+" show matching brace etc. upon insertion of the second one
 filetype plugin on
 runtime macros/matchit.vim
 

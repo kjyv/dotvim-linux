@@ -15,9 +15,6 @@ set tw=100  "line break width, use gqgq to break lines automatically
 set wrap nolist
 set formatoptions=croql "tcq
 
-let mapleader=','
-let g:mapleader = ","
-
 "always use black hole register to delete (cut and paste still as normal)
 "http://vim.wikia.com/wiki/Replace_a_word_with_yanked_text
 

@@ -9,6 +9,9 @@ if empty(glob(s:path."/autoload/plug.vim"))
     autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
+let mapleader=','
+let g:mapleader = ","
+
 call plug#begin(s:path.'/plugged')
 
 " theming
@@ -23,7 +26,7 @@ Plug 'junegunn/fzf.vim' | Plug '/opt/homebrew/opt/fzf'
 let g:fzf_vim = {}
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_action = { 'enter': 'tab split' }
-let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline \'!.venv/\' \'!.mypy_cache/\''
+let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
 
 " custom ProjectFiles command to start at .git level
 function! s:find_git_root()
@@ -110,6 +113,7 @@ let g:nerdtree_tabs_focus_on_files=1
     let g:nerdtree_tabs_open_on_gui_startup=0
 "endif
 let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeShowHidden=0
 
 Plug 'majutsushi/tagbar'
 nnoremap <C-t> :TagbarToggle<CR>

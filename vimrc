@@ -153,8 +153,9 @@ Plug 'wellle/context.vim'
 Plug 'w0rp/ale'
 let g:ale_lint_delay = 25
 "let g:ale_linters = {'python': ['mypy', 'ruff'], 'lint_file':1}
-let g:ale_linters = {'python': ['pyright', 'ruff'], 'lint_file':1}
-let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'], 'python': ['ruff'], }
+let g:ale_linters = {'python': ['pyright', 'ruff', 'ruff_format'], 'lint_file':1}
+let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'], 'python': ['ruff', 'ruff_format'], }
+let g:ale_fix_on_save = 1
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 highlight ALEError ctermbg=none guibg=NONE gui=undercurl guisp=red
@@ -198,6 +199,9 @@ let g:html5_rdfa_attributes_complete = 0
 let g:html5_microdata_attributes_complete = 0
 let g:html5_aria_attributes_complete = 0
 Plug 'pangloss/vim-javascript'
+
+" visual debugger
+" Plug 'puremourning/vimspector'
 
 " all Plugins must be added before the following line
 call plug#end()

@@ -26,7 +26,7 @@ Plug 'junegunn/fzf.vim' | Plug '/opt/homebrew/opt/fzf'
 let g:fzf_vim = {}
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_action = { 'enter': 'tab split' }
-let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
+let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline ''!.venv/'' ''!.mypy_cache/'''
 
 " custom ProjectFiles command to start at .git level
 function! s:find_git_root()
@@ -239,5 +239,3 @@ execute "source ".s:path."/highlightCursor.vim"
 " show matching brace etc. upon insertion of the second one
 filetype plugin on
 runtime macros/matchit.vim
-
-

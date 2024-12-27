@@ -36,4 +36,3 @@ nnoremap * *zzzv
 " center after half screen jump
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
-

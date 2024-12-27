@@ -11,9 +11,7 @@ endif
 
 syntax on
 filetype plugin indent on
-if has("patch-7.4-399")
-  set breakindent   " (needs vim >= 7.4.338)
-endif
+set breakindent
 set hidden
 
 " searching
@@ -22,7 +20,7 @@ set ignorecase
 set smartcase
 set number
 
-" text selection with shift arrow (page jumping is annoying)
+" rebind shift-motions to text selection (prevent accidental page jumping)
 imap <S-Up> <Up>
 imap <S-Down> <Down>
 imap <S-Left> <Left>
@@ -40,7 +38,7 @@ vmap <S-Right> <Right>
 set list                  " show line-endings, tabs and trailing spaces
 set lcs=trail:·,tab:»·    " trailing spaces and tabs are shown but not eol
 
-" show all whitespace (needs vim >= 7.4.710)
+" show all whitespace
 " set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 " set list
 
@@ -56,8 +54,8 @@ set guicursor+=a:blinkon0
 "nnoremap <M-Right> <C-i>
 
 " navigate changelist with alt-left/-right
-nnoremap <M-Left> g;
-nnoremap <M-Right> g,
+" nnoremap <M-Left> g;
+" nnoremap <M-Right> g,
 
 set showmatch    " show matching braces
 set nofoldenable " no folds by default
@@ -65,7 +63,7 @@ set nofoldenable " no folds by default
 if has("gui_running")
   " 2 use non backracking regexp engine (faster)
   " 1 use old engine (faster for eg easytags?)
-  set regexpengine=1
+  set regexpengine=2
 
   set mouse=a
 
@@ -81,6 +79,7 @@ if has("gui_running")
   noremap <c-tab> :tabnext<cr>
   noremap <c-s-tab> :tabprev<cr>
 
+  " close window with ctrl-w
   if !has("gui_macvim")
     nnoremap <C-w> :conf q<CR>
     inoremap <C-w> <Esc>:conf q<CR>
@@ -93,8 +92,8 @@ if has("gui_running")
   "set showtabline=2 " always show tabbar, fixes resizing issues
 else
   "some terminal speed-ups
-  set nocursorline
+  "set nocursorline
   set lazyredraw
   set nocursorcolumn
+  set ttimeoutlen=10
 endif
-

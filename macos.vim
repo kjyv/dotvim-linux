@@ -16,7 +16,7 @@ function! ChangeBackground()
   endtry
 endfunction"
 
-" only for macvim
+" swipe bindings only work on macvim
 map <SwipeLeft> <C-o>
 map <SwipeRight> <C-i>
 
@@ -24,7 +24,7 @@ map <SwipeRight> <C-i>
 nmap <D-F> :Rg<CR>
 nmap <D-T> :ProjectFiles<CR>
 
-" thing cursor also on terminal
+" show cursor line in insert mode also on terminal
 if $TERM_PROGRAM =~ "iTerm"
     let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
     let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode

@@ -1,5 +1,6 @@
 "get this file's location (to be relative for e.g. neovim)
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let os=substitute(system('uname'), '\n', '', '')
 
 " load plugins
 
@@ -23,10 +24,13 @@ Plug 'markonm/traces.vim'
 " use fzf to find files and rg to find in files
 " :Files :Ag :History :Commits etc.
 Plug 'junegunn/fzf.vim' | Plug '/opt/homebrew/opt/fzf'
+set rtp+=/opt/homebrew/opt/fzf
 let g:fzf_vim = {}
 let g:fzf_vim.buffers_jump = 1
 let g:fzf_action = { 'enter': 'tab split' }
-let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline ''!.venv/'' ''!.mypy_cache/'''
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --glob ''!.venv/'' --glob ''!.mypy_cache/'''
+let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline --pointer=→'
+
 
 " custom ProjectFiles command to start at .git level
 function! s:find_git_root()
@@ -35,6 +39,7 @@ endfunction
 command! ProjectFiles execute 'Files' s:find_git_root()
 
 nmap <C-p> :ProjectFiles<CR>
+nmap <S-C-F> :Rg<CR>
 
 "https://github.com/puremourning/vimspector
 "https://github.com/neoclide/coc.nvim
@@ -137,6 +142,8 @@ let g:easytags_always_enabled = 1
 let g:easytags_syntax_keyword = 'always'
 let g:easytags_python_enabled = 0
 
+Plug 'unblevable/quick-scope'
+
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 map <leader>w <plug>(easymotion-w)
@@ -211,7 +218,6 @@ set background=dark
 colorscheme PaperColor
 
 "night mode
-let os=substitute(system('uname'), '\n', '', '')
 if has("gui_running") && os != "Darwin"
     "Note: macOS dark mode is handled using system setting in macos.vim, so this is only for other
     "systems
@@ -226,7 +232,7 @@ set nomodeline
 " source some other files
 if os == "Darwin"
     execute "source ".s:path."/macos.vim"
-    execute "source ".s:path."/tex.vim"
+    " execute "source ".s:path."/tex.vim"
 endif
 
 execute "source ".s:path."/editing.vim"
